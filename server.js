@@ -7,16 +7,17 @@ import morgan from 'morgan';
 import connectDB from './src/config/db.js';
 import errorHandler from './src/middleware/errorHandler.js';
 import authRouter from './src/routes/authRoutes.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
 const app = express();
 
 app.use(helmet());
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:5174', credentials: true }));
 app.use(morgan('dev'));
 app.use(express.json());
-
+app.use(cookieParser());
 app.use('/auth', authRouter);
 
 app.use(errorHandler);
