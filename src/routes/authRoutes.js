@@ -13,9 +13,9 @@ authRouter.post(
   errorHandler,
   register
 );
-authRouter.post('/login', errorHandler, login);
-authRouter.get('/me', verifyUser, errorHandler, (req, res) => {
+authRouter.post('/login', login);
+authRouter.get('/me', verifyUser, (req, res) => {
   res.status(200).json(req.user);
 });
-authRouter.post('/logout', errorHandler, logoutUser);
+authRouter.post('/logout', logoutUser);
 export default authRouter;

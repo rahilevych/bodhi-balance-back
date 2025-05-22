@@ -8,6 +8,7 @@ import connectDB from './src/config/db.js';
 import errorHandler from './src/middleware/errorHandler.js';
 import authRouter from './src/routes/authRoutes.js';
 import cookieParser from 'cookie-parser';
+import styleRouter from './src/routes/yogaStyleRoutes.js';
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/auth', authRouter);
+app.use('/yoga', styleRouter);
 
 app.use(errorHandler);
 
