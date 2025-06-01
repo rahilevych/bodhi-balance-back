@@ -1,15 +1,20 @@
 import Schedule from '../models/Schedule.js';
+import Trainer from '../models/Trainer.js';
+import YogaStyle from '../models/YogaStyle.js';
 
 export const getTrainingForDate = async (date) => {
-  const start = new Date(date);
-  start.setHours(0, 0, 0, 0);
+  const day = new Date(date);
+  const year = day.getUTCFullYear();
+  const month = day.getUTCMonth();
+  const dayOfMonth = day.getUTCDate();
 
-  const end = new Date(date);
-  end.setHours(23, 59, 59, 999);
+  const start = new Date(Date.UTC(year, month, dayOfMonth, 0, 0, 0, 0));
+  const end = new Date(Date.UTC(year, month, dayOfMonth, 23, 59, 59, 999));
 
   const trainings = await Schedule.find({
-    date: { $gte: start, $lte: end },
-  });
-
+    datetime: { $gte: start.toISOString(), $lte: end.toISOString() },
+  })
+    .populate('trainer_id', 'fullName')
+    .populate('yogaStyle_id', 'title duration');
   return trainings;
 };
