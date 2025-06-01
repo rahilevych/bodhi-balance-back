@@ -5,14 +5,6 @@ const scheduleSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  type: {
-    type: String,
-    required: true,
-  },
-  duration: {
-    type: Number,
-    required: true,
-  },
 
   spots_taken: {
     type: Number,
@@ -25,12 +17,12 @@ const scheduleSchema = new mongoose.Schema({
   },
   trainer_id: {
     type: mongoose.Schema.Types.ObjectId,
-    // ref: 'Trainer',
+    ref: 'Trainer',
     required: true,
   },
   yogaStyle_id: {
     type: mongoose.Schema.Types.ObjectId,
-    // ref: 'YogaStyle',
+    ref: 'Style',
     required: true,
   },
 });
