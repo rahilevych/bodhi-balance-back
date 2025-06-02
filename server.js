@@ -11,6 +11,7 @@ import cookieParser from 'cookie-parser';
 import styleRouter from './src/routes/yogaStyleRoutes.js';
 import scheduleRouter from './src/routes/scheduleRoutes.js';
 import './src/cron/scheduleGenerator.js';
+import trainerRouter from './src/routes/trainerRoutes.js';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use('/auth', authRouter);
 app.use('/yoga', styleRouter);
 app.use('/schedule', scheduleRouter);
+app.use('/trainers', trainerRouter);
 
 app.use(errorHandler);
 
