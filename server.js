@@ -12,6 +12,7 @@ import styleRouter from './src/routes/yogaStyleRoutes.js';
 import scheduleRouter from './src/routes/scheduleRoutes.js';
 import './src/cron/scheduleGenerator.js';
 import trainerRouter from './src/routes/trainerRoutes.js';
+import questionRouter from './src/routes/questionRoutes.js';
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use('/auth', authRouter);
 app.use('/yoga', styleRouter);
 app.use('/schedule', scheduleRouter);
 app.use('/trainers', trainerRouter);
+app.use('/questions', questionRouter);
 
 app.use(errorHandler);
 
