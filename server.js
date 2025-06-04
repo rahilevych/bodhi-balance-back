@@ -20,7 +20,7 @@ const CLIENT_URL = process.env.CLIENT_URL;
 const app = express();
 app.use(cookieParser());
 app.use(helmet());
-app.use(cors({ origin: `${CLIENT_URL}`, credentials: true }));
+app.use(cors({ origin: CLIENT_URL, credentials: true }));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
