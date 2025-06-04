@@ -3,6 +3,7 @@ This is the backend part of a yoga studio web site Bodhi Balance built with Node
 
 ## 🧰 Technologies
 - Node.js
+- JavaScript
 - Express.js
 - MongoDB
 - JWT token
