@@ -14,6 +14,7 @@ import './src/cron/scheduleGenerator.js';
 import trainerRouter from './src/routes/trainerRoutes.js';
 import questionRouter from './src/routes/questionRoutes.js';
 import messageRouter from './src/routes/messageRoutes.js';
+import planRouter from './src/routes/planRoutes.js';
 
 dotenv.config();
 const CLIENT_URL = process.env.CLIENT_URL;
@@ -30,6 +31,7 @@ app.use('/schedule', scheduleRouter);
 app.use('/trainers', trainerRouter);
 app.use('/questions', questionRouter);
 app.use('/contact', messageRouter);
+app.use('/plans', planRouter);
 
 app.use(errorHandler);
 
