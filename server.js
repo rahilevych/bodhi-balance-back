@@ -13,13 +13,14 @@ import scheduleRouter from './src/routes/scheduleRoutes.js';
 import './src/cron/scheduleGenerator.js';
 import trainerRouter from './src/routes/trainerRoutes.js';
 import questionRouter from './src/routes/questionRoutes.js';
+import messageRouter from './src/routes/messageRoutes.js';
 
 dotenv.config();
-
+const CLIENT_URL = process.env.CLIENT_URL;
 const app = express();
 app.use(cookieParser());
 app.use(helmet());
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(cors({ origin: `${CLIENT_URL}`, credentials: true }));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
@@ -28,6 +29,7 @@ app.use('/yoga', styleRouter);
 app.use('/schedule', scheduleRouter);
 app.use('/trainers', trainerRouter);
 app.use('/questions', questionRouter);
+app.use('/contact', messageRouter);
 
 app.use(errorHandler);
 
