@@ -18,3 +18,14 @@ export const getTrainingForDate = async (date) => {
     .populate('yogaStyle_id', 'title duration');
   return trainings;
 };
+
+export const getTraining = async (id) => {
+  console.log('typeof id:', typeof id, 'value:', id);
+  const training = await Schedule.findById(id);
+  if (!training) {
+    const error = new Error('There is no training with such id');
+    error.statusCode = 404;
+    throw error;
+  }
+  return training;
+};

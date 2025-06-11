@@ -9,3 +9,13 @@ export const getAllTrainingsForDate = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getTraining = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const training = await scheduleService.getTraining(id);
+    res.status(200).json(training);
+  } catch (error) {
+    next(error);
+  }
+};
