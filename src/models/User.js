@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import { subscriptionSchema } from './Subscription';
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -32,7 +34,22 @@ const userSchema = new mongoose.Schema({
   },
   address: { type: String },
   phone: { type: String },
+  subscription: {
+    type: {
+      subscriptionSchema,
+    },
+    required: false,
+  },
+
+  bookings: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Booking',
+      required: true,
+    },
+  ],
 });
+
 const User = mongoose.model('User', userSchema);
 
 export default User;
