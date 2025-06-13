@@ -21,7 +21,9 @@ export const getTrainingForDate = async (date) => {
 
 export const getTraining = async (id) => {
   console.log('typeof id:', typeof id, 'value:', id);
-  const training = await Schedule.findById(id);
+  const training = await Schedule.findById(id)
+    .populate('trainer_id')
+    .populate('yogaStyle_id');
   if (!training) {
     const error = new Error('There is no training with such id');
     error.statusCode = 404;

@@ -25,6 +25,10 @@ const scheduleSchema = new mongoose.Schema({
     ref: 'Style',
     required: true,
   },
+  price: {
+    type: Number,
+    required: true,
+  },
 });
 
 const Schedule = mongoose.model('Schedule', scheduleSchema);
