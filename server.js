@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 
 import morgan from 'morgan';
-import connectDB from './src/config/db.js';
+
 import errorHandler from './src/middleware/errorHandler.js';
 import authRouter from './src/routes/authRoutes.js';
 import cookieParser from 'cookie-parser';
@@ -16,6 +16,7 @@ import questionRouter from './src/routes/questionRoutes.js';
 import messageRouter from './src/routes/messageRoutes.js';
 import planRouter from './src/routes/planRoutes.js';
 import userRouter from './src/routes/userRouter.js';
+import connectDB from './src/utils/db.js';
 
 dotenv.config();
 const CLIENT_URL = process.env.CLIENT_URL;

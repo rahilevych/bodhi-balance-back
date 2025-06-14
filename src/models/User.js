@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { subscriptionSchema } from './Subscription';
+import { subscriptionSchema } from './Subscription.js';
 
 const userSchema = new mongoose.Schema({
   name: {

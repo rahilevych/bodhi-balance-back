@@ -1,6 +1,7 @@
 import cron from 'node-cron';
-import connectDB from '../config/db.js';
+
 import { generateWeeklySchedule } from '../utils/generateSchedule.js';
+import connectDB from '../utils/db.js';
 
 cron.schedule('0 20 * * *', async () => {
   const DB_URI = process.env.DB_URI;
