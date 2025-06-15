@@ -1,6 +1,5 @@
-import nodemailer from 'nodemailer';
 import Message from '../models/Message.js';
-import { createTransporter } from '../utils/mailer.js';
+import { createTransporter } from '../config/mailer.js';
 
 export const postMessage = async ({ fullName, email, message }) => {
   const newMessage = new Message({ fullName, email, message });
