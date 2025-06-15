@@ -1,6 +1,4 @@
-import Schedule from '../models/Schedule.js';
-import Trainer from '../models/Trainer.js';
-import YogaStyle from '../models/YogaStyle.js';
+import Training from '../models/Training.js';
 
 export const getTrainingForDate = async (date) => {
   const day = new Date(date);
@@ -11,7 +9,7 @@ export const getTrainingForDate = async (date) => {
   const start = new Date(Date.UTC(year, month, dayOfMonth, 0, 0, 0, 0));
   const end = new Date(Date.UTC(year, month, dayOfMonth, 23, 59, 59, 999));
 
-  const trainings = await Schedule.find({
+  const trainings = await Training.find({
     datetime: { $gte: start.toISOString(), $lte: end.toISOString() },
   })
     .populate('trainer_id', 'fullName')
@@ -20,8 +18,7 @@ export const getTrainingForDate = async (date) => {
 };
 
 export const getTraining = async (id) => {
-  console.log('typeof id:', typeof id, 'value:', id);
-  const training = await Schedule.findById(id)
+  const training = await Training.findById(id)
     .populate('trainer_id')
     .populate('yogaStyle_id');
   if (!training) {
