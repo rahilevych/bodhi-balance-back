@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const scheduleSchema = new mongoose.Schema({
+const trainingSchema = new mongoose.Schema({
   datetime: {
     type: Date,
     required: true,
@@ -25,7 +25,15 @@ const scheduleSchema = new mongoose.Schema({
     ref: 'Style',
     required: true,
   },
+  price: {
+    type: Number,
+    required: true,
+  },
+  priceId: {
+    type: String,
+    required: true,
+  },
 });
 
-const Schedule = mongoose.model('Schedule', scheduleSchema);
-export default Schedule;
+const Training = mongoose.model('Training', trainingSchema);
+export default Training;

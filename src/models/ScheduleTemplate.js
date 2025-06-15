@@ -14,6 +14,8 @@ const scheduleTemplateSchema = new mongoose.Schema({
     ref: 'Style',
     required: true,
   },
+  price: { type: Number, required: true },
+  priceId: { type: String, required: true },
 });
 
 const ScheduleTemplate = mongoose.model(

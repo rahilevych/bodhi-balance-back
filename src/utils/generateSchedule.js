@@ -1,4 +1,4 @@
-import Schedule from '../models/Schedule.js';
+import Training from '../models/Training.js';
 import ScheduleTemplate from '../models/ScheduleTemplate.js';
 
 export const generateWeeklySchedule = async () => {
@@ -15,7 +15,7 @@ export const generateWeeklySchedule = async () => {
       const dateStart = new Date(currentDate.setHours(0, 0, 0, 0));
       const dateEnd = new Date(currentDate.setHours(23, 59, 59, 999));
 
-      const existingSchedules = await Schedule.find({
+      const existingSchedules = await Training.find({
         datetime: { $gte: dateStart, $lte: dateEnd },
       });
 
@@ -27,12 +27,13 @@ export const generateWeeklySchedule = async () => {
         const [hours, minutes] = template.time.split(':').map(Number);
         const datetime = new Date(dateStart);
         datetime.setHours(hours, minutes, 0, 0);
-
-        await Schedule.create({
+        await Training.create({
           datetime,
           spots_total: template.spots_total,
           trainer_id: template.trainer_id,
           yogaStyle_id: template.yogaStyle_id,
+          price: template.price,
+          priceId: template.priceId,
         });
       }
     }
