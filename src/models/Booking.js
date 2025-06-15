@@ -11,7 +11,7 @@ const bookingSchema = mongoose.Schema({
     required: true,
     default: new Date(),
   },
-  status: { type: string, enum: 'booked' | 'attended' | 'cancelled' },
+  status: { type: String, enum: ['booked', 'attended', 'cancelled'] },
 });
 const Booking = mongoose.model('Booking', bookingSchema);
 export default Booking;
