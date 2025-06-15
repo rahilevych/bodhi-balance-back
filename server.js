@@ -33,7 +33,6 @@ app.post(
   handleStripeWebhook
 );
 app.use(express.json());
-app.use(cookieParser());
 
 app.use('/auth', authRouter);
 app.use('/yoga', styleRouter);
