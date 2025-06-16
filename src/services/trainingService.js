@@ -12,6 +12,7 @@ export const getTrainingForDate = async (date) => {
   const trainings = await Training.find({
     datetime: { $gte: start.toISOString(), $lte: end.toISOString() },
   })
+    .sort({ datetime: 1 })
     .populate('trainer_id', 'fullName')
     .populate('yogaStyle_id', 'title duration');
   return trainings;
