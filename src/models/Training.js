@@ -33,6 +33,7 @@ const trainingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  duration: { type: Number },
 });
 
 const Training = mongoose.model('Training', trainingSchema);
