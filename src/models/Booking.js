@@ -3,7 +3,7 @@ const bookingSchema = mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   training: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Schedule',
+    ref: 'Training',
     required: true,
   },
   date: {
@@ -11,7 +11,7 @@ const bookingSchema = mongoose.Schema({
     required: true,
     default: new Date(),
   },
-  status: { type: String, enum: ['booked', 'attended', 'cancelled'] },
+  status: { type: String, enum: ['booked', 'completed', 'cancelled'] },
 });
 const Booking = mongoose.model('Booking', bookingSchema);
 export default Booking;
