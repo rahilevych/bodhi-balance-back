@@ -14,7 +14,16 @@ export const registerUser = async ({ name, email, password }) => {
   return { message: 'Registration successful', user: { user } };
 };
 export const loginUser = async ({ email, password }) => {
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email })
+    .populate({
+      path: 'bookings',
+      populate: {
+        path: 'training',
+        model: 'Training',
+      },
+    })
+    .exec();
+  console.log(user);
   if (!user) {
     const error = new Error('Invalid credentials');
     error.statusCode = 401;
