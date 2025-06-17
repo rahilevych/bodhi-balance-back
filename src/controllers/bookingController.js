@@ -20,3 +20,12 @@ export const bookTraining = async (req, res, next) => {
     next(error);
   }
 };
+export const getBookingsByUserId = async (req, res, next) => {
+  const userId = req.params.id;
+  try {
+    const bookings = await bookingService.getBookingsByUserId(userId);
+    res.status(200).json(bookings);
+  } catch (error) {
+    next(error);
+  }
+};

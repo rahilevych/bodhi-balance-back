@@ -77,3 +77,14 @@ const canBookTraining = (user) => {
   }
   return { allowed: false };
 };
+
+export const getBookingsByUserId = async (userId) => {
+  const bookings = await Booking.find({ user: userId }).populate({
+    path: 'training',
+    populate: {
+      path: 'yogaStyle_id',
+      model: 'Style',
+    },
+  });
+  return bookings;
+};
