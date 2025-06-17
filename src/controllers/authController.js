@@ -27,8 +27,10 @@ export const logoutUser = (req, res, next) => {
   try {
     res.clearCookie('token', {
       httpOnly: true,
-      secure: false,
-      sameSite: 'Strict',
+      secure: true,
+      sameSite: 'none',
+      // secure: false,
+      // sameSite: 'Strict',
       path: '/',
     });
 
