@@ -22,8 +22,8 @@ export const loginUser = async ({ email, password }) => {
         model: 'Training',
       },
     })
+    .populate('subscription')
     .exec();
-  console.log(user);
   if (!user) {
     const error = new Error('Invalid credentials');
     error.statusCode = 401;
