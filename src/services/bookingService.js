@@ -1,19 +1,21 @@
 import Booking from '../models/Booking.js';
+import Subscription from '../models/Subscription.js';
+import Plan from '../models/Plan.js';
 import Training from '../models/Training.js';
 import User from '../models/User.js';
 import * as stripeService from './stripeService.js';
 
-export const bookTraining = async (userId, trainingId) => {
+export const bookTraining = async (userId, trainingId, type) => {
   const user = await User.findById(userId);
   const training = await Training.findById(trainingId);
 
   if (!user || !training) throw new Error('User or training not found');
 
   const checkTraining = isTrainingAvailiable(training);
-  const checkUser = canBookTraining(user);
+  const checkUser = await canBookTraining(userId);
 
   if (!checkTraining.allowed) {
-    throw new Error('All spots are taken');
+    return { message: 'All spots are taken!' };
   }
 
   if (!checkUser.allowed) {
@@ -21,11 +23,12 @@ export const bookTraining = async (userId, trainingId) => {
       const session = await stripeService.createStripeSession(
         training.priceId,
         userId,
-        trainingId
+        trainingId,
+        type
       );
       return { url: session.url };
     } else {
-      throw new Error('Cannot book training');
+      return { message: 'Cannot book training!' };
     }
   }
   const booking = await createBooking(user, training);
@@ -42,40 +45,65 @@ export const createBooking = async (user, training) => {
   training.spots_taken += 1;
   await training.save();
   user.bookings.push(booking._id);
-  if (user.subscription?.type === 'pack') {
-    user.subscription.remainingTrainings -= 1;
+
+  const subscription = await Subscription.findOne({
+    user: user._id,
+    status: 'active',
+  });
+  const plan = await subscription.populate('type');
+  if (plan.type.type === 'pack') {
+    subscription.remainingTrainings -= 1;
+    if (subscription.remainingTrainings <= 0) {
+      subscription.status = 'expired';
+    }
+    await subscription.save();
   }
+
   await user.save();
   return booking;
 };
+
 const isTrainingAvailiable = (training) => {
   const spotsTaken = training.spots_taken;
   const spotsTotal = training.spots_total;
+  const now = new Date();
   if (spotsTaken >= spotsTotal) {
-    return { allowed: false, reason: 'all spots are taken' };
+    return { allowed: false, reason: 'All spots are taken' };
+  }
+  if (new Date(training.datetime) < now) {
+    return { allowed: false, reason: 'Booking closed' };
   }
   return { allowed: true };
 };
-const canBookTraining = (user) => {
+
+export const canBookTraining = async (userId) => {
   const now = new Date();
-  if (!user.subscription) {
+
+  const subscription = await Subscription.findOne({
+    user: userId,
+    status: 'active',
+    $or: [{ validUntil: { $gt: now } }, { remainingTrainings: { $gt: 0 } }],
+  }).populate('type');
+
+  if (!subscription) {
     return { allowed: false, reason: 'need_payment' };
   }
-  if (user.subscription.type === 'unlimited') {
-    if (user.subscription.validUntil > now) {
+
+  const plan = await subscription.populate('type');
+
+  if (plan.type.type === 'unlimited') {
+    if (subscription.validUntil > now) {
       return { allowed: true };
-    } else {
-      return { allowed: false, reason: 'need_payment' };
     }
   }
-  if (user.subscription.type === 'pack') {
-    if (user.subscription.remainingTrainings > 0) {
+
+  if (plan.type.type === 'pack') {
+    if (subscription.remainingTrainings > 0) {
       return { allowed: true };
-    } else {
-      return { allowed: false, reason: 'need_payment' };
     }
   }
-  return { allowed: false };
+
+  return { allowed: false, reason: 'need_payment' };
 };
 
 export const getBookingsByUserId = async (userId) => {
@@ -86,5 +114,23 @@ export const getBookingsByUserId = async (userId) => {
       model: 'Style',
     },
   });
+  const now = new Date();
+
+  for (const booking of bookings) {
+    const trainingDate = new Date(booking.training?.datetime);
+
+    if (trainingDate < now && booking.status === 'booked') {
+      booking.status = 'completed';
+      await booking.save();
+    }
+  }
   return bookings;
+};
+export const createBookingAfterPayment = async (userId, trainingId) => {
+  const user = await User.findById(userId);
+  const training = await Training.findById(trainingId);
+
+  if (!user || !training) throw new Error('User or training not found');
+
+  return await createBooking(user, training);
 };
