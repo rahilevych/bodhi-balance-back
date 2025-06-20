@@ -12,11 +12,9 @@ export const buySubscription = async (req, res, next) => {
     if (result?.url) {
       return res.status(200).json({ url: result.url });
     }
-
-    return res.status(201).json({
-      message: result.message,
-      subscription: result.message,
-    });
+    if (result?.message) {
+      return res.status(403).json({ message: result.message });
+    }
   } catch (error) {
     next(error);
   }

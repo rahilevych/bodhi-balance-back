@@ -1,6 +1,5 @@
 import Booking from '../models/Booking.js';
 import Subscription from '../models/Subscription.js';
-import Plan from '../models/Plan.js';
 import Training from '../models/Training.js';
 import User from '../models/User.js';
 import * as stripeService from './stripeService.js';
@@ -10,12 +9,19 @@ export const bookTraining = async (userId, trainingId, type) => {
   const training = await Training.findById(trainingId);
 
   if (!user || !training) throw new Error('User or training not found');
+  const alreadyBooked = await Booking.exists({
+    user: userId,
+    training: trainingId,
+  });
 
+  if (alreadyBooked) {
+    return { message: 'You have already booked this training!' };
+  }
   const checkTraining = isTrainingAvailiable(training);
   const checkUser = await canBookTraining(userId);
 
   if (!checkTraining.allowed) {
-    return { message: 'All spots are taken!' };
+    return { message: checkTraining.reason };
   }
 
   if (!checkUser.allowed) {
@@ -50,13 +56,15 @@ export const createBooking = async (user, training) => {
     user: user._id,
     status: 'active',
   });
-  const plan = await subscription.populate('type');
-  if (plan.type.type === 'pack') {
-    subscription.remainingTrainings -= 1;
-    if (subscription.remainingTrainings <= 0) {
-      subscription.status = 'expired';
+  if (subscription) {
+    const plan = await subscription.populate('type');
+    if (plan.type.type === 'pack') {
+      subscription.remainingTrainings -= 1;
+      if (subscription.remainingTrainings <= 0) {
+        subscription.status = 'expired';
+      }
+      await subscription.save();
     }
-    await subscription.save();
   }
 
   await user.save();

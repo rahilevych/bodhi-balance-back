@@ -16,7 +16,7 @@ const scheduleTemplateSchema = new mongoose.Schema({
   },
   price: { type: Number, required: true },
   priceId: { type: String, required: true },
-  duration: { type: String },
+  duration: { type: Number, required: true },
 });
 
 const ScheduleTemplate = mongoose.model(

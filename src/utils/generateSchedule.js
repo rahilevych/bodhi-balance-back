@@ -34,6 +34,7 @@ export const generateWeeklySchedule = async () => {
           yogaStyle_id: template.yogaStyle_id,
           price: template.price,
           priceId: template.priceId,
+          duration: template.duration,
         });
       }
     }
