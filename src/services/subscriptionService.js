@@ -72,3 +72,10 @@ export const createSubscriptionAfterPayment = async (userId, planId) => {
 
   return subscription;
 };
+export const getSubscriptionByUserId = async (userId) => {
+  const subscription = await Subscription.findOne({
+    user: userId,
+    status: 'active',
+  }).populate('type');
+  return subscription;
+};

@@ -21,7 +21,7 @@ export const bookTraining = async (req, res, next) => {
   }
 };
 export const getBookingsByUserId = async (req, res, next) => {
-  const userId = req.params.id;
+  const userId = req.user._id;
   try {
     const bookings = await bookingService.getBookingsByUserId(userId);
     res.status(200).json(bookings);

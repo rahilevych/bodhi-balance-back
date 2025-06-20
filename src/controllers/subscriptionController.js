@@ -19,3 +19,15 @@ export const buySubscription = async (req, res, next) => {
     next(error);
   }
 };
+export const getSubscriptionByUserId = async (req, res, next) => {
+  const userId = req.user._id;
+  try {
+    const subscription = await subscriptionService.getSubscriptionByUserId(
+      userId
+    );
+    console.log(subscription);
+    res.status(200).json(subscription);
+  } catch (error) {
+    next(error);
+  }
+};
