@@ -11,7 +11,6 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const { token, user } = await authService.loginUser(req.body);
-    console.log('token', token);
     res.cookie('token', token, {
       httpOnly: true,
       secure: true,

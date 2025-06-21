@@ -18,6 +18,7 @@ import trainingRouter from './src/routes/trainingRoutes.js';
 import bookingRouter from './src/routes/bookingRoutes.js';
 import stripeRouter from './src/routes/stripeRouter.js';
 import { handleStripeWebhook } from './src/controllers/stripeController.js';
+import subscriptionRouter from './src/routes/subscriptionRoute.js';
 
 dotenv.config();
 const CLIENT_URL = process.env.CLIENT_URL;
@@ -43,6 +44,7 @@ app.use('/contact', messageRouter);
 app.use('/plans', planRouter);
 app.use('/users', userRouter);
 app.use('/booking', bookingRouter);
+app.use('/subscription', subscriptionRouter);
 
 app.use(errorHandler);
 

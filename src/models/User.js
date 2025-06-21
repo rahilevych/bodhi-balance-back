@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { subscriptionSchema } from './Subscription.js';
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -35,9 +34,8 @@ const userSchema = new mongoose.Schema({
   address: { type: String },
   phone: { type: String },
   subscription: {
-    type: {
-      subscriptionSchema,
-    },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: false,
   },
 
