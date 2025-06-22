@@ -29,3 +29,20 @@ export const getBookingsByUserId = async (req, res, next) => {
     next(error);
   }
 };
+export const cancelBooking = async (req, res, next) => {
+  const userId = req.user._id;
+  const { bookingId, trainingId } = req.body;
+  try {
+    const booking = await bookingService.cancelBooking(
+      userId,
+      bookingId,
+      trainingId
+    );
+    if (booking.message) {
+      res.status(403).json(message);
+    }
+    return res.status(200).json(booking);
+  } catch (error) {
+    next(err);
+  }
+};

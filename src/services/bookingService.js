@@ -142,3 +142,29 @@ export const createBookingAfterPayment = async (userId, trainingId) => {
 
   return await createBooking(user, training);
 };
+export const cancelBooking = async (userId, bookingId, trainingId) => {
+  const user = await User.findById(userId);
+  const booking = await Booking.findById(bookingId);
+  const training = await Training.findById(trainingId);
+  const now = new Date();
+  if (!user || !booking) {
+    throw new Error('User or booking not found');
+  }
+  if (!booking.user.equals(user._id)) {
+    throw new Error('Unauthorized: This booking does not belong to the user');
+  }
+  const bookingDate = new Date(booking.datetime);
+  const diffInHours = (bookingDate - now) / (1000 * 60 * 60);
+
+  if (diffInHours < 24) {
+    return {
+      message:
+        'You cannot cancel a booking less than 24 hours before the session',
+    };
+  }
+  booking.status = 'cancelled';
+  await booking.save();
+  training.spots_taken -= 1;
+  await training.save();
+  return booking;
+};
