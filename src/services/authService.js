@@ -38,9 +38,7 @@ export const loginUser = async ({ email, password }) => {
   }
   return {
     message: 'Login successful',
-    user: {
-      user,
-    },
+    user,
     token: generateToken(user._id),
   };
 };
