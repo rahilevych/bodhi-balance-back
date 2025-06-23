@@ -141,8 +141,8 @@ export const createBookingAfterPayment = async (userId, trainingId) => {
   const training = await Training.findById(trainingId);
 
   if (!user || !training) throw new Error('User or training not found');
-
-  return await createBooking(user, training);
+  const booking = await createBooking(user, training);
+  return { booking };
 };
 export const cancelBooking = async (userId, bookingId, trainingId) => {
   const user = await User.findById(userId);
