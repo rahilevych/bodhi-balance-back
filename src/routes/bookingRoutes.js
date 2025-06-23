@@ -9,6 +9,6 @@ import { verifyUser } from '../middleware/verification.js';
 const bookingRouter = express.Router();
 bookingRouter.post('/training', verifyUser, bookTraining);
 bookingRouter.patch('/training/cancel', verifyUser, cancelBooking);
-bookingRouter.get('/trainings/:id', verifyUser, getBookingsByUserId);
+bookingRouter.get('/trainings', verifyUser, getBookingsByUserId);
 
 export default bookingRouter;

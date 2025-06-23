@@ -12,6 +12,7 @@ export const bookTraining = async (userId, trainingId, type) => {
   const alreadyBooked = await Booking.exists({
     user: userId,
     training: trainingId,
+    status: 'active',
   });
 
   if (alreadyBooked) {
