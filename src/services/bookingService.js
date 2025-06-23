@@ -37,9 +37,10 @@ export const bookTraining = async (userId, trainingId, type) => {
     } else {
       return { message: 'Cannot book training!' };
     }
+  } else {
+    const booking = await createBooking(user, training);
+    return { booking };
   }
-  const booking = await createBooking(user, training);
-  return { booking };
 };
 
 export const createBooking = async (user, training) => {
