@@ -73,7 +73,7 @@ export const createBooking = async (user, training) => {
   return booking;
 };
 
-const isTrainingAvailiable = (training) => {
+export const isTrainingAvailiable = (training) => {
   const spotsTaken = training.spots_taken;
   const spotsTotal = training.spots_total;
   const now = new Date();
@@ -99,15 +99,13 @@ export const canBookTraining = async (userId) => {
     return { allowed: false, reason: 'need_payment' };
   }
 
-  const plan = await subscription.populate('type');
-
-  if (plan.type.type === 'unlimited') {
+  if (subscription.type.type === 'unlimited') {
     if (subscription.validUntil > now) {
       return { allowed: true };
     }
   }
 
-  if (plan.type.type === 'pack') {
+  if (subscription.type.type === 'pack') {
     if (subscription.remainingTrainings > 0) {
       return { allowed: true };
     }

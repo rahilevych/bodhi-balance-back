@@ -1,10 +1,12 @@
-import Booking from '../models/Booking.js';
 import User from '../models/User.js';
 
 export const updateUser = async (id, data) => {
   const user = await User.findByIdAndUpdate(id, data, {
     new: true,
   });
+  if (!user) {
+    throw new Error(`User with ID ${id} not found`);
+  }
   return user;
 };
 export const deleteUser = async (userId) => {

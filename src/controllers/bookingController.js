@@ -43,6 +43,6 @@ export const cancelBooking = async (req, res, next) => {
     }
     return res.status(200).json(booking);
   } catch (error) {
-    next(err);
+    next(error);
   }
 };

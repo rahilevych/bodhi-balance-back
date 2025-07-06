@@ -5,7 +5,7 @@ import generateToken from '../utils/generateToken.js';
 export const registerUser = async ({ name, email, password }) => {
   const existingUser = await User.findOne({ email });
   if (existingUser) {
-    const err = new Error('User already exist');
+    const err = new Error('User already exists');
     err.statusCode = 400;
     throw err;
   }
