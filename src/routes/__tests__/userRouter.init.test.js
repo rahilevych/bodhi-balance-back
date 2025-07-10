@@ -1,23 +1,20 @@
 import request from 'supertest';
-import mongoose from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
 import { app } from '../../../server.js';
 import User from '../../models/User.js';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import {
+  clearTestDB,
+  connectTestDB,
+  disconnectTestDB,
+} from '../../services/__tests__/setupTestDB.js';
 dotenv.config({ path: '.env' });
 
-let mongoServer;
 let token;
 let userId;
 
 beforeAll(async () => {
-  if (mongoose.connection.readyState !== 0) {
-    await mongoose.disconnect();
-  }
-  mongoServer = await MongoMemoryServer.create();
-  const uri = mongoServer.getUri();
-  await mongoose.connect(uri);
+  await connectTestDB();
 });
 
 beforeEach(async () => {
@@ -36,11 +33,10 @@ beforeEach(async () => {
   token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 });
 afterEach(async () => {
-  await User.deleteMany();
+  await clearTestDB();
 });
 afterAll(async () => {
-  await mongoose.disconnect();
-  await mongoServer.stop();
+  await disconnectTestDB();
 });
 
 describe('PUT /users/:id', () => {

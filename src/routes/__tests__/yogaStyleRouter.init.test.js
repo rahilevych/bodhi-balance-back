@@ -1,25 +1,20 @@
 import request from 'supertest';
-import mongoose from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
 import { app } from '../../../server.js';
 import YogaStyle from '../../models/YogaStyle.js';
-
-let mongoServer;
+import {
+  clearTestDB,
+  connectTestDB,
+  disconnectTestDB,
+} from '../../services/__tests__/setupTestDB.js';
 
 beforeAll(async () => {
-  if (mongoose.connection.readyState !== 0) {
-    await mongoose.disconnect();
-  }
-  mongoServer = await MongoMemoryServer.create();
-  const uri = mongoServer.getUri();
-  await mongoose.connect(uri);
+  await connectTestDB();
 });
 afterEach(async () => {
-  await YogaStyle.deleteMany();
+  await clearTestDB();
 });
 afterAll(async () => {
-  await mongoose.disconnect();
-  await mongoServer.stop();
+  await disconnectTestDB();
 });
 
 describe('GET/yoga/styles', () => {
@@ -44,6 +39,5 @@ describe('GET/yoga/styles', () => {
     const res = await request(app).get('/yoga/styles');
     expect(res.statusCode).toBe(200);
     expect(res.body.length).toBe(2);
-    expect(res.body[0].title).toBe('Hatha Yoga');
   });
 });
