@@ -29,8 +29,8 @@
     "supertest": "^7.1.1"
   },
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js",
+    "dev": "nodemon startServer.js",
+    "start": "node startServer.js",
     "test": "jest"
   },
   "keywords": [],
