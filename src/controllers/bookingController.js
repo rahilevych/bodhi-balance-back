@@ -39,7 +39,7 @@ export const cancelBooking = async (req, res, next) => {
       trainingId
     );
     if (booking.message) {
-      res.status(403).json(message);
+      res.status(403).json({ message: booking.message });
     }
     return res.status(200).json(booking);
   } catch (error) {
