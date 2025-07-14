@@ -153,8 +153,8 @@ export const cancelBooking = async (userId, bookingId, trainingId) => {
   if (!booking.user.equals(user._id)) {
     throw new Error('Unauthorized: This booking does not belong to the user');
   }
-  const bookingDate = new Date(booking.datetime);
-  const diffInHours = (bookingDate - now) / (1000 * 60 * 60);
+  const trainingDate = new Date(training.datetime);
+  const diffInHours = (trainingDate - now) / (1000 * 60 * 60);
 
   if (diffInHours < 24) {
     return {
