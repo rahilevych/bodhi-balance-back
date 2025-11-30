@@ -11,7 +11,11 @@ export const registerUser = async ({ name, email, password }) => {
   }
   const hashedPassword = await bcrypt.hash(password, 12);
   const user = await User.create({ name, email, password: hashedPassword });
-  return { message: 'Registration successful', user: { user } };
+  return {
+    message: 'Registration successful',
+    user,
+    token: generateToken(user._id),
+  };
 };
 export const loginUser = async ({ email, password }) => {
   const user = await User.findOne({ email })
