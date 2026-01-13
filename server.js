@@ -30,9 +30,9 @@ app.post(
   express.raw({ type: 'application/json' }),
   handleStripeWebhook,
 );
-app.use('/crone', cronRouter);
-app.use(express.json());
 
+app.use(express.json());
+app.use('/crone', cronRouter);
 app.use('/auth', authRouter);
 app.use('/yoga', styleRouter);
 app.use('/schedule', trainingRouter);
