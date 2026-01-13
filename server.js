@@ -32,7 +32,7 @@ app.post(
 );
 
 app.use(express.json());
-app.use('/crone', cronRouter);
+app.use('/cron', cronRouter);
 app.use('/auth', authRouter);
 app.use('/yoga', styleRouter);
 app.use('/schedule', trainingRouter);
