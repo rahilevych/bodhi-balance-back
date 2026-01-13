@@ -1,7 +1,7 @@
 import { generateWeeklySchedule } from '../utils/generateSchedule.js';
 import connectDB from '../config/db.js';
 
-export async function generateDaileSchedule() {
+export default async function generateDailySchedule() {
   const DB_URI = process.env.DB_URI;
   try {
     connectDB(DB_URI);
