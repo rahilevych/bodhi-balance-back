@@ -2,7 +2,7 @@ import express from 'express';
 
 const cronRouter = express.Router();
 cronRouter.post('/schedule', async (req, res) => {
-  if (req.header.authorization != `Bearer ${process.env.CRON_SECRET}`) {
+  if (req.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`) {
     return res.sendStatus(401);
   }
   try {
