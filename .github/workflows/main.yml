@@ -2,7 +2,7 @@ name: Schedule cron
 
 on:
   schedule:
-    - cron: "07 13 * * *"
+    - cron: "10 13 * * *"
   workflow_dispatch:
 
 jobs:
