@@ -30,7 +30,7 @@ app.post(
   express.raw({ type: 'application/json' }),
   handleStripeWebhook,
 );
-app.use('/schedule', cronRouter);
+app.use('/crone', cronRouter);
 app.use(express.json());
 
 app.use('/auth', authRouter);
