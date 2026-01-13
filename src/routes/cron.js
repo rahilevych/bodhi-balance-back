@@ -1,5 +1,5 @@
 import express from 'express';
-import generateDailySchedule from '../cron/scheduleGenerator';
+import generateDailySchedule from '../cron/scheduleGenerator.js';
 
 const cronRouter = express.Router();
 cronRouter.post('/schedule', async (req, res) => {
