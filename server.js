@@ -16,6 +16,7 @@ import trainingRouter from './src/routes/trainingRoutes.js';
 import bookingRouter from './src/routes/bookingRoutes.js';
 import { handleStripeWebhook } from './src/controllers/stripeController.js';
 import subscriptionRouter from './src/routes/subscriptionRoute.js';
+import cronRouter from './src/routes/cron.js';
 
 const CLIENT_URL = process.env.CLIENT_URL;
 export const app = express();
@@ -27,8 +28,9 @@ app.use(morgan('dev'));
 app.post(
   '/stripe/webhook',
   express.raw({ type: 'application/json' }),
-  handleStripeWebhook
+  handleStripeWebhook,
 );
+app.use('/schedule', cronRouter);
 app.use(express.json());
 
 app.use('/auth', authRouter);
