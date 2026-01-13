@@ -1,0 +1,14 @@
+name: Schedule cron
+
+on:
+  schedule:
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -X POST https://bodhi-balance-back.onrender.com/cron/schedule \
+          -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"
