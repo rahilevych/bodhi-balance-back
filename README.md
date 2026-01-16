@@ -8,7 +8,7 @@ This service a RESTful API built to manage user data, authentication, and core b
   <a href="https://bodhi-balance-8ucr.vercel.app/" target="_blank">
     <img src="https://img.shields.io/badge/Live_Demo-🚀-blue?style=for-the-badge&logo=vercel" alt="Live Demo">
   </a>
-  <a href="https://github.com/rahilevych/bodhi-balance target="_blank">
+  <a href="https://github.com/rahilevych/bodhi-balance" target="_blank">
     <img src="https://img.shields.io/badge/Frontend_Repo-⚙️-lightgrey?style=for-the-badge&logo=github" alt="Frontend">
   </a>
 </p>
