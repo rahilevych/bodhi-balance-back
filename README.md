@@ -2,23 +2,25 @@
 
 Welcome to the repository for the **backend part** of the **Bodhi Balance** yoga studio website.
 
-This service is a robust RESTful API built to manage user data, authentication, and core business logic for the application.
+This service a RESTful API built to manage user data, authentication, and core business logic for the application.
 
-| Resource | Link |
-| :--- | :--- |
-| **Live Demo (Frontend)** | [Visit Bodhi Balance Live Site](https://bodhi-balance-8ucr.vercel.app/) |
-| **Frontend Repository** | [Go to Frontend Repo](https://github.com/rahilevych/bodhi-balance) |
+<p align="left">
+  <a href="https://bodhi-balance-8ucr.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/Live_Demo-🚀-blue?style=for-the-badge&logo=vercel" alt="Live Demo">
+  </a>
+  <a href="https://github.com/rahilevych/bodhi-balance target="_blank">
+    <img src="https://img.shields.io/badge/Frontend_Repo-⚙️-lightgrey?style=for-the-badge&logo=github" alt="Frontend">
+  </a>
+</p>
 
-## 🌟 Overview
-
-The Bodhi Balance Backend  API designed using a **layered architecture** to ensure clean separation of logic
-
+> [!NOTE]
+> The backend is hosted on a free Render instance. If the site feels slow to load initially, please wait a little bit for the server to "wake up" from its sleep state. Sometimes a manual page reload helps once the server is active.
 ---
 
 ## 📝 API Endpoints
 
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
+| Method | Endpoint | 
+| :--- | :--- |
 | `POST` | `/auth/register` | User registration. |
 | `POST` | `/auth/login` | User login (returns JWT token). |
 | `POST` | `/auth/logout` | User logout |
